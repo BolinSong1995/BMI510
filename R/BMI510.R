@@ -1,22 +1,15 @@
 # bmi510.R
 library(pwr)
 
+
 #' Randomly sample elements or rows from a vector or data frame
 #'
-#' This function is a wrapper around the \code{sample} function that can handle both atomic vectors and data frames as input. It randomly samples either \code{n} elements from an atomic vector or \code{n} rows from a data frame, with or without replacement.
-#'
-#' @param X An atomic vector, data frame, or tibble
+#' @param x An atomic vector, data frame, or tibble
 #' @param n n samples will be sampled from X
 #' @param replace default TRUE, this allows sampling with replacement
-#' @examples
-#' X = c(1,2,3)
-#' rando(X, 2, replace = F)
-#' @returns
-#' vector or data frame
-#'@details
-#' This function take a vector or dataframe. If a vector is the input, this function returns a specified number of random samples from this vector. If a data frame is the imput, this function picks a specified number of random rows and returns a data frame with these rows.
+#'
+#' @return vector or data frame
 #' @export
-
 rando = function(x, n = 1, replace = T) {
   if (is.data.frame(x) || is.matrix(x)) {
     return(x[sample(nrow(x), n, replace = replace), ])
@@ -47,7 +40,10 @@ is_min = function(x, na.rm = T) {
   x == min(x)
 }
 
-
+#' Check if values in a vector are equal to the max value
+#'
+#' This function accepts an atomic vector \code{x} and returns a logical vector with \code{TRUE} values where \code{x} equals its max value.
+#'
 #' @param x An atomic vector to check
 #' @param na.rm Logical. Should missing values be removed? (default = TRUE)
 #'
@@ -66,6 +62,8 @@ is_max = function(x, na.rm = T) {
 }
 
 
+#' repeat matrix
+#'
 #' @param x A matrix or data frame to replicate
 #' @param M The number of times to repeat the rows of \code{x} (default = 1)
 #' @param N The number of times to repeat the columns of \code{x} (default = 1)
@@ -103,7 +101,8 @@ classes = function(x) {
   return(sapply(x, class))
 }
 
-
+#' Returns a tibble x in which the numeric variables have been scaled with scale
+#'
 #' @param x A tibble to scale
 #' @param center Logical. Should the variables be centered? (default = TRUE)
 #' @param scale Logical. Should the variables be scaled to have unit variance? (default = TRUE)
@@ -196,6 +195,8 @@ log_likelihood_f = function(x, df1, df2) {
 }
 
 
+#' This function calculates the log-likelihood of a sample \code{x} under the t distribution, with degrees of freedom \code{df1} and \code{df2}.
+#'
 #' @param x A numeric vector of data
 #' @param df The degrees of freedom of the t distribution
 #'
@@ -246,7 +247,8 @@ specificity = function(pred, truth) {
   return(true_negatives / (true_negatives + false_positives))
 }
 
-
+#' This function calculates the precision of a binary classification model based on the predicted labels \code{pred} and the true labels \code{truth}.
+#'
 #' @param pred A binary vector of predicted labels
 #' @param truth A binary vector of true labels
 #'
@@ -262,7 +264,8 @@ precision = function(pred, truth) {
   return(true_positives / (true_positives + false_positives))
 }
 
-
+#' This function calculates the recall of a binary classification model based on the predicted labels \code{pred} and the true labels \code{truth}.
+#'
 #' @param pred A binary vector of predicted labels
 #' @param truth A binary vector of true labels
 #'
@@ -276,7 +279,8 @@ recall = function(pred, truth) {
   return(sensitivity(pred, truth))
 }
 
-
+#' This function calculates the accuracy of a binary classification model based on the predicted labels \code{pred} and the true labels \code{truth}.
+#'
 #' @param pred A binary vector of predicted labels
 #' @param truth A binary vector of true labels
 #'
